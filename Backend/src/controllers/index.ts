@@ -2,7 +2,7 @@ import {Router} from 'express';
 
 export type controllerType ={
     url: string;
-    router: any; //todo fix
+    router: Router;
 }
 export class BaseController {
     url: string;

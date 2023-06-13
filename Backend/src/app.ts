@@ -28,13 +28,13 @@ class Server {
     async initialize() {
         try {
             const {AppRouter} = require('./routes')
-            const {expressConfig} = require('./config/express.config')
+            const {expressConfig} = require('./config/express.config') // Retrieve the express configurations
             expressConfig(this.app, AppRouter, this.config);
         } catch (e) {
             throw e;
         }
     }
-
+    // Start the necessary services and start the server after that
     async start() {
         await this.initialize();
         await new Promise((resolve, reject) => {

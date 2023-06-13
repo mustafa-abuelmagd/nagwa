@@ -1,3 +1,4 @@
+// Defining file configurations
 export type configType = {
     app: { version: string, is_mandatory: boolean, name: string },
     port: number,

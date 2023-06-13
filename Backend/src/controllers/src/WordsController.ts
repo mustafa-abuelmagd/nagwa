@@ -23,12 +23,11 @@ const testData: TestData = JSON.parse(fs.readFileSync(path.join(__dirname, '../.
 router.get('/getWords', async (req, res, next) => {
     try {
         const words: [wordType[], string[]] = getRandomWords(10);
-        const wordObjs = words[0];
-        const wordPoses = words[1];
+        const wordObjs = words[0]; // Word Objects
+        const wordPoses = words[1]; // Word types (Parts of speech)
         res.json({
             wordObjs,
             wordPoses,
-
         });
     } catch (e) {
         next(e);
@@ -47,6 +46,8 @@ router.post('/getRanking', async (req, res, next) => {
 });
 
 
+//Parse two words of each type to have a normal distribution in the returned array
+//Construct the word types and send them with the response
 const getRandomWords = (count: number): [wordType[], string[]] => {
     let word_pos: string[] = [];
     const adjectives: wordType[] = [];
@@ -96,5 +97,5 @@ const shuffle = (array: any[]): any[] => {
     }
     return shuffledArray;
 };
-
+// Export a BaseController type that can be injected in the routes file
 module.exports = new BaseController('/', 'public', router);
