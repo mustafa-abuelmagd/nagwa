@@ -2,7 +2,6 @@ import express, {Application, Router as _Router} from 'express';
 import {configType} from "../config/config.dev";
 import * as path from "path";
 import {controllerType} from "../controllers";
-import {authentication} from "../middlewares";
 import * as fs from "fs";
 
 const controllerDir = '../controllers/src';
@@ -35,7 +34,6 @@ export class AppRouter {
         const dir: string = path.join(__dirname, controllerDir);
         this.getControllers(dir, privateControllers, publicControllers);
         this.injectControllers(publicControllers);
-        this.app.use(authentication);
         this.injectControllers(privateControllers);
 
     }

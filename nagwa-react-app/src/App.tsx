@@ -6,18 +6,20 @@ import RankScreen from "./Components/RankScreen";
 
 const App = () => {
 
-    const [progress, setProgress] = useState(10);
+    // State to track the progress percentage
+    const [progress, setProgress] = useState(0);
     const location = useLocation();
     const navigate = useNavigate();
-    const updateProgress = (answeredQuestions, totalQuestions) => {
-        const progressPercentage = ((answeredQuestions + 1) / totalQuestions) * 100;
+    // Function to update the progress based on answered questions and total questions
+    const updateProgress = (answeredQuestions: number, totalQuestions: number) => {
+        const progressPercentage = ((answeredQuestions ) / totalQuestions) * 100;
         setProgress(progressPercentage);
     };
 
     useEffect(() => {
+        // If progress is less than 100, navigate to the PracticeScreen
         if (progress < 100) {
             navigate("/PracticeScreen")
-
         }
     }, [])
     return (
@@ -27,8 +29,9 @@ const App = () => {
             ) : location.pathname === "/RankScreen" ? (
                 <RankScreen updateProgress={updateProgress}/>
             ) : <></>}
-            <div>
-                Progress: {progress}%
+
+            <div className="progress-bar">
+                <div className="progress-bar-fill" style={{ width: `${progress}%` }}></div>
             </div>
         </>
     )

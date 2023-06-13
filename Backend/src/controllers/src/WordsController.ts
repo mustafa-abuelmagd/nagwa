@@ -22,8 +22,14 @@ const testData: TestData = JSON.parse(fs.readFileSync(path.join(__dirname, '../.
 
 router.get('/getWords', async (req, res, next) => {
     try {
-        const words: wordType[] = getRandomWords(10);
-        res.json(words);
+        const words: [wordType[], string[]] = getRandomWords(10);
+        const wordObjs = words[0];
+        const wordPoses = words[1];
+        res.json({
+            wordObjs,
+            wordPoses,
+
+        });
     } catch (e) {
         next(e);
     }
@@ -41,12 +47,14 @@ router.post('/getRanking', async (req, res, next) => {
 });
 
 
-const getRandomWords = (count: number): wordType[] => {
+const getRandomWords = (count: number): [wordType[], string[]] => {
+    let word_pos: string[] = [];
     const adjectives: wordType[] = [];
     const nouns: wordType[] = [];
     const adverbs: wordType[] = [];
     const verbs: wordType[] = [];
     testData.wordList.map(word => {
+        word_pos.push(word.pos);
         switch (word.pos) {
             case "adjective":
                 adjectives.push(word)
@@ -69,8 +77,9 @@ const getRandomWords = (count: number): wordType[] => {
     shuffledWords = [...shuffle(adverbs).slice(0, 3), ...shuffledWords]
     shuffledWords = [...shuffle(nouns).slice(0, 3), ...shuffledWords]
     shuffledWords = [...shuffle(verbs).slice(0, 3), ...shuffledWords]
-
-    return shuffle(shuffledWords).slice(0, count);
+    const word_pos_set = new Set<string>(word_pos);
+    word_pos = [...word_pos_set]
+    return [shuffle(shuffledWords).slice(0, count), word_pos ];
 };
 
 const calculateRank = (score: number): number => {

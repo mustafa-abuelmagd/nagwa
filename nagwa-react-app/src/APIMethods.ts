@@ -7,6 +7,8 @@ export const apiClient = axios.create({
     baseURL: API,
 });
 
+
+// Function to fetch words from the API
 export const getWords = async () => {
     try {
         const response = await apiClient.get(GET_WORDS);
@@ -17,8 +19,10 @@ export const getWords = async () => {
     }
 };
 
-export const getRanking = async (score) => {
+// Function to fetch ranking based on the score from the API
+export const getRanking = async (score: number) => {
     try {
+        // Send a POST request to the 'getRanking' endpoint with the score data
         const response = await apiClient.post(GET_RANKING, {
             "score": score
         });

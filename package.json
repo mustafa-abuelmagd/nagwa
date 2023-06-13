@@ -7,8 +7,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-be": "nodemon ./Backend/dist/app.js",
     "build-be": "cd Backend && tsc",
-    "start-fe": "nodemon ./Backend/dist/app.js",
-    "build-fe": "cd Backend && tsc",
     "postinstall": "npm run build"
   },
   "keywords": [],
